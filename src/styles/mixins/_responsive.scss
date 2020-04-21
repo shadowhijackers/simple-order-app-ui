@@ -1,0 +1,21 @@
+@import "layout-bp";
+
+$mobile: mobile;
+$tablet: tablet;
+$laptop: laptop;
+$desktop: desktop;
+
+
+@mixin responsive($media) {
+  @if ($media == $tablet) {
+    @include layout-bp(sm) {
+      @content;
+    }
+  }
+  @if ($media == $mobile) {
+    @include layout-bp(xs) {
+      @content;
+    }
+  }
+}
+

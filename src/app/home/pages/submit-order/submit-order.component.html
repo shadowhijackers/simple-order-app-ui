@@ -1,0 +1,40 @@
+<main fxLayout="row" fxLayoutAlign="center center" class="sh-u-m-8">
+
+  <mat-card class="mat-card-section">
+
+    <mat-card-header>
+      <h2 class="sh-u-text-align-center sh-u-full-width sh-theme-accent">Submit your order</h2>
+    </mat-card-header>
+
+    <mat-card-content>
+      <section>
+        <form [formGroup]="orderForm" (ngSubmit)="submit()">
+
+          <div>
+            <mat-form-field>
+              <mat-label>Product name</mat-label>
+              <input formControlName="name" placeholder="Enter the product name" matInput/>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <mat-label>Unit type</mat-label>
+              <input formControlName="unitType" placeholder="Enter unit type like kg, ltr" matInput/>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <mat-label>Unit value</mat-label>
+              <input formControlName="unit" placeholder="Enter the unit value" matInput/>
+            </mat-form-field>
+          </div>
+          <div class="sh-u-text-align-center">
+            <button type="submit" [disabled]="orderForm.invalid" color="primary" mat-raised-button> Submit</button>
+          </div>
+        </form>
+      </section>
+    </mat-card-content>
+
+  </mat-card>
+
+</main>

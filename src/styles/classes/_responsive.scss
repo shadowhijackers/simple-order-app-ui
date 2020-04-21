@@ -1,0 +1,26 @@
+@include sh-base-typography-utilities($custom-typography);
+@include home-module-responsive($sizeMap)
+
+@include responsive(tablet) {
+
+  @include sh-base-typography-utilities($custom-typography-sm);
+  @include home-module-responsive($sizeMap-sm);
+
+  body {
+    font-size: 13px;
+  }
+
+  .sh-u {
+    @include alignments(2);
+  }
+
+  .app-mt-header {
+    margin-top: 15px !important;
+  }
+
+
+}
+
+@include responsive(mobile){
+  @include home-module-responsive($sizeMap-xs);
+}

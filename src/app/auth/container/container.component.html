@@ -1,0 +1,19 @@
+<section class="sh-auth__container">
+  <mat-card class="sh-auth__card" fxLayoutAlign="center start" fxLayout>
+
+    <div class="sh-auth__welcome-section" fxFlex="45">
+      <app-welcome (page)="changePage($event)"></app-welcome>
+    </div>
+
+    <div *ngIf="isSignIn else signUpTemp" class="sh-auth__login-form" fxFlex="55">
+      <app-sign-in (signin)="signIn($event)"></app-sign-in>
+    </div>
+
+    <ng-template #signUpTemp>
+      <div class="sh-auth__sign-up-form" fxFlex="55">
+        <app-sign-up (signup)="signUp($event)"></app-sign-up>
+      </div>
+    </ng-template>
+
+  </mat-card>
+</section>

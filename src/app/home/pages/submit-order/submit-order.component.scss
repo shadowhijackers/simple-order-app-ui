@@ -1,0 +1,12 @@
+.mat-card-section{
+
+ border-width: 1px;
+ border-style: solid;
+ border-color: #eee;
+ width: 470px;
+
+  ::ng-deep.mat-form-field {
+    width: 100% !important;
+  }
+
+}
