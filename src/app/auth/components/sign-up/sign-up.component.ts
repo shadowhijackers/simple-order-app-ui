@@ -22,16 +22,16 @@ export class SignUpComponent implements OnInit {
 
   buildLoginForm() {
     this.signUpForm = this.fb.group({
-      email: ['', Validators.required, Validators.email],
+      email: ['', [Validators.required, Validators.email]],
       name: ['', Validators.required],
-      passsword: ['', Validators.required],
-      confirmPasssword: ['', Validators.required]
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
     }, {validators: this.passwordMatchValidator});
   }
 
 
   passwordMatchValidator(frm: FormGroup) {
-    return frm.controls.passsword.value === frm.controls.confirmpasssword.value ? null : {mismatch: true};
+    return frm.controls.password.value === frm.controls.confirmPassword.value ? null : {mismatch: true};
   }
 
   submit() {

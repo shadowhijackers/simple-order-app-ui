@@ -13,7 +13,7 @@ export class OrdersService {
   }
 
   getOrders(selectedDate) {
-    const url = environment.url + '/orders?order_date=' + selectedDate;
+    const url = environment.url + '/orders?orders_date=' + selectedDate;
     return this.http.get(url);
   }
 

@@ -5,15 +5,7 @@ import {ApiService} from '@service/http/api.service';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
-
-let data = {
-  name: 'Rice',
-  unitType: 'Kg',
-  units: 1,
-};
-
-let datas = Array.from({length: 100}, (i) => data);
-
+import {ExcelService} from '@app/core/providers';
 
 @Component({
   selector: 'app-orders',
@@ -24,14 +16,13 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  dataSource = new MatTableDataSource(datas);
+  dataSource = new MatTableDataSource([]);
   displayedColumns: string[] = [
     'id',
     'name',
     'unitType',
     'units',
   ];
-  candidateSearchControl = new FormControl('');
   minDate = new Date(2000, 0, 1);
   maxDate = new Date();
 
@@ -40,6 +31,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
   constructor(
     private apiService: ApiService,
+    private excelService: ExcelService
   ) {
   }
 
@@ -52,14 +44,19 @@ export class OrdersComponent implements OnInit, OnDestroy {
   setOrders(selectedDate) {
     this.apiService.getOrders(selectedDate).subscribe((res: any) => {
       if (!res.error) {
-        this.dataSource.data = res;
+        this.dataSource.data = res.data;
       }
     });
   }
 
+  download() {
+    const fileName = new Date().toString() && this.dateFormCtrl.value.toString();
+    this.excelService.exportAsExcelFile(this.dataSource.data, fileName);
+  }
+
   private listenForDateChange() {
     this.dateFormCtrl.valueChanges.pipe(takeUntil(this.unSubscribe)).subscribe((date) => {
-      this.setOrders(date);
+      this.setOrders(new Date(date));
     });
   }
 

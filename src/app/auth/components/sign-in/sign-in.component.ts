@@ -1,5 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AppStateService} from '@app/core/states/app-state.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -12,7 +13,7 @@ export class SignInComponent implements OnInit {
   loginForm: FormGroup;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
 
   }
@@ -27,8 +28,8 @@ export class SignInComponent implements OnInit {
 
   private buildLoginForm() {
     this.loginForm = this.fb.group({
-      email: ['', Validators.required, Validators.email],
-      passsword: ['', Validators.required]
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
     });
   }
 

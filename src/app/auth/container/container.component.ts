@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {ApiService} from '@service/http/api.service';
 import {MessageService} from '@shared/providers';
 import {StorageKeys, StorageService} from '@app/storage';
+import {AppStateService} from '@app/core/states/app-state.service';
 
 @Component({
   selector: 'app-container',
@@ -17,7 +18,8 @@ export class ContainerComponent implements OnInit {
   constructor(
     private router: Router,
     private apiService: ApiService,
-    private msgService: MessageService
+    private msgService: MessageService,
+    private appState: AppStateService
   ) {
   }
 
@@ -29,12 +31,19 @@ export class ContainerComponent implements OnInit {
     if (data) {
       this.apiService.signIn(data).subscribe((res: any) => {
         if (!res.error) {
-          if (res.type === 'admin') {
+
+          this.appState.setSessionUser(res.data);
+          StorageService.instance.setItem(StorageKeys.userData, res.data, true);
+          StorageService.instance.setItem(StorageKeys.auth, res.session.token);
+
+          if (res.role === 'admin') {
             this.router.navigateByUrl('/orders');
           } else {
             this.router.navigateByUrl('/orders/save');
           }
+
           return;
+
         }
         this.msgService.showSnackBar(res.error);
       });
@@ -44,13 +53,18 @@ export class ContainerComponent implements OnInit {
   signUp(data) {
     if (data) {
       this.apiService.singUp(data).subscribe((res: any) => {
+
         if (!res.error) {
+          this.appState.setSessionUser(res.data);
           this.msgService.showSnackBar('successfully registered');
-          StorageService.instance.setItem(StorageKeys.userData, JSON.stringify(res));
+          StorageService.instance.setItem(StorageKeys.userData, JSON.stringify(res.data));
+          StorageService.instance.setItem(StorageKeys.auth, JSON.stringify(res.session.token));
           this.router.navigateByUrl('/orders/save');
           return;
         }
+
         this.msgService.showSnackBar(res.error);
+
       });
     }
   }

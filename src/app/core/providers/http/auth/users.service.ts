@@ -13,12 +13,12 @@ export class UsersService {
   }
 
   signIn(data) {
-    const url = environment.url + '/login';
+    const url = environment.url + '/users/login';
     return this.http.post(url, data);
   }
 
   singUp(data) {
-    const url = environment.url + '/register';
+    const url = environment.url + '/users/register';
     return this.http.post(url, data);
   }
 

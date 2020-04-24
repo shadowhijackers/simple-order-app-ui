@@ -1,26 +1,24 @@
 import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {StorageKeys, StorageService} from '@app/storage';
+import {AppStateService} from '@app/core/states/app-state.service';
 
 const NAV_DATAS = [
   {
     name: 'ORDERS',
-    routerLink: '.',
+    routerLink: '/orders',
     icon: 'home'
   },
-  // {
-  //   name: 'CANDIDATES',
-  //   routerLink: '.',
-  //   icon: 'people'
-  // },
-  // {
-  //   name: 'CURRENT CANDIDATES',
-  //   routerLink: '.',
-  //   icon: 'person'
-  // },
-  // {
-  //   name: 'SHEDULED CANDIDATES',
-  //   routerLink: '.',
-  //   icon: 'person'
-  // },
+  {
+    name: 'NEW ORDER',
+    routerLink: '/orders/save',
+    icon: 'fiber_new'
+  },
+  {
+    name: 'LOGOUT',
+    routerLink: '.',
+    icon: 'power_settings_new'
+  },
 ];
 
 @Component({
@@ -32,10 +30,26 @@ export class HomeComponent implements OnInit {
 
   navDatas = NAV_DATAS;
 
-  constructor() {
+  constructor(
+    private router: Router,
+    private appState: AppStateService,
+  ) {
   }
 
   ngOnInit() {
+  }
+
+  selectNav(data: { routerLink: string; name: string; icon: string }) {
+
+    if (data.name === 'LOGOUT') {
+      StorageService.instance.setItem(StorageKeys.auth, '');
+      StorageService.instance.setItem(StorageKeys.userData, '');
+      this.appState.setSessionUser('');
+      this.router.navigateByUrl('/');
+      return;
+    }
+    this.router.navigateByUrl(data.routerLink);
+
   }
 
 }

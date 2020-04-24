@@ -1,4 +1,4 @@
-<main style="width: 50%; margin: auto" class="sh-candidates-data-table">
+<main style="width: 75%; margin: auto" class="sh-candidates-data-table">
 
   <div class="sh-u-m-8 sh-u-mt-12" fxLayout="row" fxLayoutAlign="space-between center">
     <mat-form-field>
@@ -14,7 +14,7 @@
     <!--      <mat-icon matSuffix>search</mat-icon>-->
     <!--    </mat-form-field>-->
 
-    <button color="accent" mat-raised-button>Download</button>
+    <button color="accent" (click)="download()" mat-raised-button>Download</button>
 
   </div>
 
@@ -50,7 +50,11 @@
 
     </table>
 
-    <mat-paginator [length]="100"
+    <div *ngIf="dataSource.data.length < 1" fxLayout="row" fxLayoutAlign="center center">
+      <h1 class="sh-theme-txt-0-dot-7">{{'No Items found' | uppercase}} </h1>
+    </div>
+
+    <mat-paginator [length]="dataSource.data.length"
                    [pageSizeOptions]="[10, 25, 50]"
                    [pageSize]="10">
     </mat-paginator>

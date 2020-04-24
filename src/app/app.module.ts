@@ -8,6 +8,7 @@ import {AppComponent} from './app.component';
 import {NotFoundComponent} from './404';
 import {APPStoreModule} from '@app/store/store.module';
 import {ApiInterceptor} from '@service/http-interceptors/api.interceptor';
+import {AuthInterceptor} from '@service/http-interceptors/auth.interceptor';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import {ApiInterceptor} from '@service/http-interceptors/api.interceptor';
     HttpClientModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })
